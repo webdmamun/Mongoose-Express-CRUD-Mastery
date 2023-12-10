@@ -79,6 +79,22 @@ const updateUser = async (req: Request, res: Response) => {
   }
 };
 
+// delete-a-user-from-db"
+const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const id = req.params?.userId;
+    const result = await UserServices.deleteUserFromDb(parseFloat(id));
+
+    if (result.deletedCount === 1) {
+      res.status(200).json(successMessage('User deleted successfully!', null));
+    }
+
+    // eslint-disable-next-line
+  } catch (error: any) {
+    res.status(404).json(errorMessage(error));
+  }
+};
+
 // Response Error Message
 // eslint-disable-next-line
 const errorMessage = (error: any) => {
@@ -105,4 +121,5 @@ export const UserController = {
   getAllUser,
   getSingleUser,
   updateUser,
+  deleteUser,
 };
