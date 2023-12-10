@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+//zod validation
 const nameValidationSchema = z.object({
   firstName: z.string().refine((value) => /^[A-Z][a-z]*$/.test(value), {
     message:
