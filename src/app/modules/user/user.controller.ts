@@ -29,6 +29,24 @@ const getAllUser = async (req: Request, res: Response) => {
   }
 };
 
+// get-a-user-by-id"
+const getSingleUser = async (req: Request, res: Response) => {
+  try {
+    const id = req.params?.userId;
+    const result = await UserServices.getSingleUserFromDb(parseFloat(id));
+
+    if (result) {
+      res
+        .status(200)
+        .json(successMessage('User fetched successfully!', result));
+    }
+
+    // eslint-disable-next-line
+  } catch (error: any) {
+    res.status(404).json(errorMessage(error));
+  }
+};
+
 // Response Success Message
 // eslint-disable-next-line
 const successMessage = (message: string, data: any) => {
@@ -63,4 +81,5 @@ const errorMessage = (error: any) => {
 export const UserController = {
   createUser,
   getAllUser,
+  getSingleUser,
 };

@@ -10,7 +10,7 @@ const createUserIntoDb = async (user: TUser) => {
   return data;
 };
 
-// get-route-"/api/users"
+// get-all-users"
 const getAllUserFromDb = async () => {
   const result = await User.find(
     {},
@@ -20,7 +20,17 @@ const getAllUserFromDb = async () => {
   return result;
 };
 
+// get-a-user-by-id"
+const getSingleUserFromDb = async (id: number) => {
+  const user = await User.isUserExists(id);
+  if (!user) {
+    throw new Error('User not found');
+  }
+  return user;
+};
+
 export const UserServices = {
   createUserIntoDb,
   getAllUserFromDb,
+  getSingleUserFromDb,
 };
