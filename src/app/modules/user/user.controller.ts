@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { UserServices } from './user.service';
-import userValidationSchema from './user.validation';
+import userValidationSchema, { orderValidationSchema } from './user.validation';
 
 // post-a-user
 const createUser = async (req: Request, res: Response) => {
@@ -95,6 +95,27 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 };
 
+// put-add-new-product
+const addNewProduct = async (req: Request, res: Response) => {
+  try {
+    const id = req.params?.userId;
+    const product = req.body;
+    const parsedOrderData = orderValidationSchema.parse(product);
+    const result = await UserServices.addNewProductIntoOrder(
+      parseFloat(id),
+      parsedOrderData,
+    );
+
+    if (result.acknowledged === true) {
+      res.status(200).json(successMessage('Order created successfully!', null));
+    }
+
+    // eslint-disable-next-line
+  } catch (error: any) {
+    res.status(404).json(errorMessage(error));
+  }
+};
+
 // Response Error Message
 // eslint-disable-next-line
 const errorMessage = (error: any) => {
@@ -122,4 +143,5 @@ export const UserController = {
   getSingleUser,
   updateUser,
   deleteUser,
+  addNewProduct,
 };
