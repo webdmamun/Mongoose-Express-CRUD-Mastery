@@ -7,5 +7,7 @@ route.get('/', UserController.getAllUser);
 route.get('/:userId', UserController.getSingleUser);
 route.put('/:userId', UserController.updateUser);
 route.delete('/:userId', UserController.deleteUser);
+route.put('/:userId/orders', UserController.addNewProduct);
+route.get('/:userId/orders', UserController.getUserOrders);
 
 export const userRoute = route;

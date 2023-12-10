@@ -116,6 +116,22 @@ const addNewProduct = async (req: Request, res: Response) => {
   }
 };
 
+// get-user-order"
+const getUserOrders = async (req: Request, res: Response) => {
+  try {
+    const id = req.params?.userId;
+    const result = await UserServices.getUserOrdersFromDb(parseFloat(id));
+
+    res
+      .status(200)
+      .json(successMessage('Orders fetched successfully!', result));
+
+    // eslint-disable-next-line
+  } catch (error: any) {
+    res.status(404).json(errorMessage(error));
+  }
+};
+
 // Response Error Message
 // eslint-disable-next-line
 const errorMessage = (error: any) => {
@@ -144,4 +160,5 @@ export const UserController = {
   updateUser,
   deleteUser,
   addNewProduct,
+  getUserOrders,
 };
