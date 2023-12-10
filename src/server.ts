@@ -1,19 +1,19 @@
 import mongoose from 'mongoose';
-import app from './app';
 import config from './app/config';
+import app from './app';
 
-async function main() {
+const PORT = config.port;
+
+async function server() {
   try {
     await mongoose.connect(config.database_url as string);
 
-    app.listen(config.port, () => {
-      console.log(`app is listening on port ${config.port}`);
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`); // eslint-disable-line
     });
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error); // eslint-disable-line
   }
 }
-const filePath = process.cwd();
-console.log(filePath);
 
-main();
+server().catch((err) => console.log(err)); // eslint-disable-line

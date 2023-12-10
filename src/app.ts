@@ -1,19 +1,26 @@
 import express, { Application, Request, Response } from 'express';
-const app: Application = express();
 import cors from 'cors';
-import { UserRoutes } from './app/module/user.route';
+import { userRoute } from './app/modules/user/user.route';
 
-//persers
-app.use(express.json());
+const app: Application = express();
+
 app.use(cors());
+app.use(express.json());
+app.use('/api/users', userRoute);
 
-// application routes
-app.use('/api', UserRoutes);
-
+// Respond to the request with 'Server is running'
 app.get('/', (req: Request, res: Response) => {
-  res.status(200).json({
-    status: 'success',
-    message: 'Wow! Mongoose Express CRUD Mastery is Running',
+  res.send('Wow! The Application is running successfully');
+});
+
+app.all('*', (req: Request, res: Response) => {
+  res.status(404).json({
+    success: false,
+    message: 'Page not found',
+    error: {
+      code: 404,
+      description: 'Page not found',
+    },
   });
 });
 
