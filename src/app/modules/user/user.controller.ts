@@ -57,6 +57,28 @@ const successMessage = (message: string, data: any) => {
   };
 };
 
+// put-or-update-a-user-by-id"
+const updateUser = async (req: Request, res: Response) => {
+  try {
+    const id = req.params?.userId;
+    const userData = req.body;
+
+    const parsedUserData = userValidationSchema.parse(userData);
+    const result = await UserServices.updateUserIntoDb(
+      parseFloat(id),
+      parsedUserData,
+    );
+    if (result?.userData)
+      res
+        .status(200)
+        .json(successMessage('User updated successfully!', result.userInfo));
+
+    // eslint-disable-next-line
+  } catch (error: any) {
+    res.status(404).json(errorMessage(error));
+  }
+};
+
 // Response Error Message
 // eslint-disable-next-line
 const errorMessage = (error: any) => {
@@ -82,4 +104,5 @@ export const UserController = {
   createUser,
   getAllUser,
   getSingleUser,
+  updateUser,
 };

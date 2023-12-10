@@ -29,8 +29,24 @@ const getSingleUserFromDb = async (id: number) => {
   return user;
 };
 
+// put-or-update-a-user"
+const updateUserIntoDb = async (id: number, user: TUser) => {
+  const existsUser = await User.isUserExists(id);
+  if (!existsUser) {
+    throw new Error('User not found');
+  }
+
+  const userData = await User.updateOne({ userId: id }, user);
+  const userInfo = await User.findOne(
+    { userId: id },
+    { _id: 0, orders: 0, __v: 0 },
+  );
+  return { userData, userInfo };
+};
+
 export const UserServices = {
   createUserIntoDb,
   getAllUserFromDb,
   getSingleUserFromDb,
+  updateUserIntoDb,
 };
