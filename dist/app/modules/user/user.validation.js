@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.orderValidationSchema = void 0;
 const zod_1 = require("zod");
+//zod validation
 const nameValidationSchema = zod_1.z.object({
     firstName: zod_1.z.string().refine((value) => /^[A-Z][a-z]*$/.test(value), {
         message: 'First name must start with a capital letter and only contain letters',
