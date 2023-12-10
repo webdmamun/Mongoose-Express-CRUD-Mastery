@@ -132,6 +132,21 @@ const getUserOrders = async (req: Request, res: Response) => {
   }
 };
 
+// get-total-price"
+const getUserOrdersTotal = async (req: Request, res: Response) => {
+  try {
+    const id = req.params?.userId;
+    const result = await UserServices.getUserOrderTotalAmount(parseFloat(id));
+    res
+      .status(200)
+      .json(successMessage('Total price calculated successfully!', result));
+
+    // eslint-disable-next-line
+  } catch (error: any) {
+    res.status(404).json(errorMessage(error));
+  }
+};
+
 // Response Error Message
 // eslint-disable-next-line
 const errorMessage = (error: any) => {
@@ -161,4 +176,5 @@ export const UserController = {
   deleteUser,
   addNewProduct,
   getUserOrders,
+  getUserOrdersTotal,
 };
